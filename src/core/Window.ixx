@@ -11,7 +11,6 @@ export module Window;
 export struct Window {
     static inline SDL_Renderer* renderer;
     static inline SDL_Window* window;
-
     static inline entt::registry registry;
 
     static inline unsigned int dt_now = 0;
