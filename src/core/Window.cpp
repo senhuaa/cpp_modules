@@ -14,3 +14,20 @@ void Window::create_window(const int w, const int h) {
     window = SDL_CreateWindow("CPP MODULES", w, h, 0);
     renderer = SDL_CreateRenderer(window, nullptr);
 }
+
+void Window::update() {
+    SDL_RenderPresent(renderer);
+}
+
+void Window::render() {
+}
+
+void Window::clear() {
+    SDL_RenderClear(renderer);
+}
+
+void Window::tick_delta_time() {
+    dt_last = dt_now;
+    dt_now = SDL_GetTicks();
+    delta_time = static_cast<float>(dt_now) - static_cast<float>(dt_last);
+}

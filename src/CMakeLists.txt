@@ -1,4 +1,4 @@
-
+include_directories(${CMAKE_SOURCE_DIR}/external/entt/src)
 
 
 file(GLOB MODULES_FILE ${CMAKE_CURRENT_SOURCE_DIR}/*/**.ixx)
