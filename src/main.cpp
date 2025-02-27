@@ -3,12 +3,11 @@
 
 import Window;
 import Input;
-
-static constexpr int WIDTH = 1600;
-static constexpr int HEIGHT = 960;
+import MouseSys;
+import World;
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
-    Window::create_window(WIDTH, HEIGHT);
+    Window::create_window();
     return SDL_APP_CONTINUE;
 }
 
@@ -22,7 +21,8 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
 }
 
 SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
-    return (event->type == SDL_EVENT_QUIT) ? SDL_APP_SUCCESS : SDL_APP_CONTINUE;
+    MouseSys::update(event, World::current_world);
+    return event->type == SDL_EVENT_QUIT ? SDL_APP_SUCCESS : SDL_APP_CONTINUE;
 }
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result) {

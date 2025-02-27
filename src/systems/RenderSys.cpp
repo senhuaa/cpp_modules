@@ -12,14 +12,15 @@ import Transform;
 import Sprite;
 import Camera;
 import Collider;
+import World;
 
 
 void RenderSys::render(entt::registry &registry, SDL_Renderer *renderer) {
-    // auto view = registry.view<Transform, Sprite>();
-    //
-    // auto cameraView = registry.view<Camera>();
-    // auto cameraEnt = cameraView.front();
-    // auto& camera = cameraView.get<Camera>(cameraEnt);
+    auto view = registry.view<Transform, Sprite>();
+
+    auto cameraView = registry.view<Camera>();
+    auto cameraEnt = cameraView.front();
+    auto& camera = cameraView.get<Camera>(cameraEnt);
     //
     // for (auto ent : view) {
     //     auto [transform, sprite] = view.get(ent);
@@ -36,8 +37,11 @@ void RenderSys::render(entt::registry &registry, SDL_Renderer *renderer) {
     //
     //     SDL_RenderTexture(renderer, sprite.texture, &rect, nullptr);
     // }
-    debug_collider(registry, renderer);
+    //debug_collider(registry, renderer);
+    render_world(registry, renderer, cameraEnt);
 }
+
+
 
 void RenderSys::debug_collider(entt::registry &registry, SDL_Renderer *renderer) {
     auto view = registry.view<Transform, Collider>();
@@ -57,4 +61,32 @@ void RenderSys::debug_collider(entt::registry &registry, SDL_Renderer *renderer)
         SDL_RenderRect(renderer, &rect);
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+}
+
+void RenderSys::render_world(entt::registry &registry, SDL_Renderer *renderer, const entt::entity& camera_entity) {
+    const auto map = World::current_world;
+
+    auto& camera = registry.get<Camera>(camera_entity);
+
+    float w, h;
+    SDL_GetTextureSize(map->texture, &w, &h);
+
+    float scale = camera.viewport.h / h;
+
+    float scaledWidth = w * scale;
+
+    const SDL_FRect rect {
+        0, 0,
+        static_cast<float>(map->texture->w) * camera.zoom,
+        static_cast<float>(map->texture->h) * camera.zoom
+    };
+
+    const SDL_FRect render{
+        0,
+        0,
+        scaledWidth,
+        camera.viewport.h,
+    };
+
+    SDL_RenderTexture(renderer, map->texture, &rect, &render);
 }

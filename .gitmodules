@@ -4,3 +4,6 @@
 [submodule "external/entt"]
 	path = external/entt
 	url = https://github.com/skypjack/entt.git
+[submodule "external/SDL_image"]
+	path = external/SDL_image
+	url = https://github.com/libsdl-org/SDL_image.git

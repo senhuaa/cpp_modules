@@ -13,11 +13,14 @@ export struct Window {
     static inline SDL_Window* window;
     static inline entt::registry registry;
 
+    static constexpr int WIDTH = 1200;
+    static constexpr int HEIGHT = 675;
+
     static inline unsigned int dt_now = 0;
     static inline unsigned int dt_last = 0;
     static inline float delta_time = 0.0f;
 
-    static void create_window(int w, int h);
+    static void create_window();
     static void update();
     static void render();
     static void clear();

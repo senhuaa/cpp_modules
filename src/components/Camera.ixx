@@ -8,6 +8,6 @@ module;
 export module Camera;
 
 export struct Camera {
-    SDL_FRect viewport{};
-    float zoom{};
+    SDL_FRect viewport;
+    float zoom;
 };
