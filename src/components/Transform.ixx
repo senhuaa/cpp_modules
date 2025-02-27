@@ -8,7 +8,7 @@ module;
 export module Transform;
 
 export struct Transform {
-    SDL_FPoint position{};
-    float width{};
-    float height{};
+    SDL_FPoint position;
+    float width;
+    float height;
 };

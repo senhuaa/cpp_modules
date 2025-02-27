@@ -2,6 +2,7 @@
 #include <SDL3/SDL_main.h>
 
 import Window;
+import Input;
 
 static constexpr int WIDTH = 1600;
 static constexpr int HEIGHT = 960;
@@ -13,6 +14,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
 
 SDL_AppResult SDL_AppIterate(void *appstate) {
     Window::tick_delta_time();
+    Input::update_mouse_state();
     Window::clear();
     Window::render();
     Window::update();
