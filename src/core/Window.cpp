@@ -13,6 +13,7 @@ import Transform;
 import Sprite;
 import Camera;
 import World;
+import Input;
 
 void Window::create_window() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -32,6 +33,7 @@ void Window::create_window() {
 }
 
 void Window::update() {
+    World::update(WIDTH, HEIGHT, delta_time);
     SDL_RenderPresent(renderer);
 }
 

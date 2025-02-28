@@ -14,15 +14,15 @@ module Map;
 import Window;
 
 
-void Map::load(SDL_Renderer* renderer, const std::string& texPath, const std::string& maskPath) {
-    SDL_Surface* texSur = IMG_Load(texPath.c_str());
-    if (!texSur) {
+void Map::load(SDL_Renderer* renderer, const std::string& texPath, const std::string& maskPath, const float& w,  const float& h) {
+    texture = IMG_LoadTexture(renderer, texPath.c_str());
+    if (!texture) {
         throw std::runtime_error(SDL_GetError());
     }
-    texture = SDL_CreateTextureFromSurface(renderer, texSur);
-    SDL_DestroySurface(texSur);
-
     walkableMask = SDL_LoadBMP(maskPath.c_str());
+    mapWidth = w;
+    mapHeight = h;
+    offsetX = 0.0f;
 }
 
 bool Map::is_walkable(const float x, const float y) const {

@@ -13,7 +13,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char **argv) {
 
 SDL_AppResult SDL_AppIterate(void *appstate) {
     Window::tick_delta_time();
-    Input::update_mouse_state();
+    Input::update();
     Window::clear();
     Window::render();
     Window::update();

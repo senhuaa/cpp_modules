@@ -11,8 +11,11 @@ export module Map;
 export struct Map {
     SDL_Texture* texture;
     SDL_Surface* walkableMask;
+    float mapWidth;
+    float mapHeight;
+    float offsetX;
 
-    void load(SDL_Renderer* renderer, const std::string& texPath, const std::string& maskPath);
+    void load(SDL_Renderer* renderer, const std::string& texPath, const std::string& maskPath, const float& w,  const float& h);
 
     [[nodiscard]] bool is_walkable(float x, float y) const;
 };

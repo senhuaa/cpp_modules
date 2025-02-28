@@ -15,7 +15,7 @@ export struct Input {
     static inline float mouseX = 0.0f;
     static inline float mouseY = 0.0f;
 
-    static void update_mouse_state() {
+    static void update() {
         mouseButtonState = SDL_GetMouseState(&mouseX, &mouseY);
     }
 
