@@ -64,7 +64,7 @@ void RenderSys::debug_collider(entt::registry &registry, SDL_Renderer *renderer)
 }
 
 void RenderSys::render_world(entt::registry &registry, SDL_Renderer *renderer, const entt::entity& camera_entity) {
-    const auto map = World::current_world;
+    const auto map = World::current_map;
 
     auto& camera = registry.get<Camera>(camera_entity);
 

@@ -4,7 +4,7 @@
 module;
 
 #include <SDL3/SDL_stdinc.h>
-#include <chrono>
+#include <cmath>
 
 module World;
 
@@ -12,7 +12,7 @@ import Input;
 
 void World::load_world() {
     if (!map_list.empty()) {
-        current_world = map_list[0];
+        current_map = map_list[0];
     }
 }
 
@@ -26,11 +26,11 @@ void World::update(int w, int h, float delta_time) {
     constexpr float edgeThreshold = 50.0f;
 
     if (Input::mouseX >= static_cast<float>(w) - edgeThreshold) {
-        current_world->offsetX += 1.0f * delta_time;
+        current_map->offsetX += 1.0f * delta_time;
     } else if (Input::mouseX <= edgeThreshold) {
-        current_world->offsetX -= 1.0f * delta_time;
+        current_map->offsetX -= 1.0f * delta_time;
     }
 
-    const float mapOffsetX = current_world->mapWidth - static_cast<float>(w) - 4.5f;
-    current_world->offsetX = std::floor(SDL_clamp(current_world->offsetX, 0.0f, mapOffsetX));
+    const float mapOffsetX = current_map->mapWidth - static_cast<float>(w) - 4.5f;
+    current_map->offsetX = std::floor(SDL_clamp(current_map->offsetX, 0.0f, mapOffsetX));
 }
