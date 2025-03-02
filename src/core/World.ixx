@@ -18,5 +18,5 @@ export struct World {
 
     static void load_world();
     static void load_maps(SDL_Renderer* renderer);
-    static void update(int w, int h, float delta_time);
+    static void update(entt::registry& registry, int w, int h, float delta_time);
 };

@@ -13,6 +13,7 @@ import Sprite;
 import Camera;
 import Collider;
 import World;
+import Animator;
 
 
 void RenderSys::render(entt::registry &registry, SDL_Renderer *renderer) {
@@ -22,12 +23,15 @@ void RenderSys::render(entt::registry &registry, SDL_Renderer *renderer) {
     auto cameraEnt = cameraView.front();
     auto& camera = cameraView.get<Camera>(cameraEnt);
 
+    render_world(registry, renderer, cameraEnt);
+
     for (auto ent : view) {
+        if (registry.all_of<Animator>(ent)) continue;
         auto [transform, sprite] = view.get(ent);
 
         SDL_FRect rect{
-            transform.position.x * camera.zoom,
-            transform.position.y * camera.zoom,
+            0,
+            0,
             transform.width,
             transform.height
         };
@@ -35,15 +39,12 @@ void RenderSys::render(entt::registry &registry, SDL_Renderer *renderer) {
         rect.x = (transform.position.x - camera.viewport.x) * camera.zoom + camera.viewport.w / 2 - rect.w / 2;
         rect.y = (transform.position.y - camera.viewport.y) * camera.zoom + camera.viewport.h / 2 - rect.h / 2;
 
-        SDL_RenderTexture(renderer, sprite.texture, &rect, nullptr);
+        SDL_RenderTexture(renderer, sprite.texture, nullptr, &rect);
+        debug_collider(registry, renderer, &rect);
     }
-    //debug_collider(registry, renderer);
-    render_world(registry, renderer, cameraEnt);
 }
 
-
-
-void RenderSys::debug_collider(entt::registry &registry, SDL_Renderer *renderer) {
+void RenderSys::debug_collider(entt::registry &registry, SDL_Renderer *renderer, const SDL_FRect* rect_) {
     auto view = registry.view<Transform, Collider>();
 
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
@@ -52,8 +53,8 @@ void RenderSys::debug_collider(entt::registry &registry, SDL_Renderer *renderer)
         auto [transform, collider] = view.get(ent);
 
         SDL_FRect rect{
-            collider.bounds.x + transform.position.x,
-            collider.bounds.y + transform.position.y,
+            collider.bounds.x + rect_->x,
+            collider.bounds.y + rect_->y,
             collider.bounds.w,
             collider.bounds.h
         };

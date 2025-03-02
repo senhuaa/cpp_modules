@@ -14,6 +14,8 @@ import Sprite;
 import Camera;
 import World;
 import Input;
+import Player;
+import AnimationSys;
 
 void Window::create_window() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -30,15 +32,20 @@ void Window::create_window() {
 
     World::load_maps(renderer);
     World::load_world();
+
+
+
+    Player::create_player(registry, renderer);
 }
 
 void Window::update() {
-    World::update(WIDTH, HEIGHT, delta_time);
+    World::update(registry, WIDTH, HEIGHT, delta_time);
     SDL_RenderPresent(renderer);
 }
 
 void Window::render() {
     RenderSys::render(registry, renderer);
+    AnimationSys::update(registry, renderer, delta_time);
 }
 
 void Window::clear() {
