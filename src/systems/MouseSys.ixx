@@ -3,6 +3,7 @@
 //
 module;
 
+#include <entt/entt.hpp>
 #include <SDL3/SDL_events.h>
 
 export module MouseSys;
@@ -10,5 +11,5 @@ export module MouseSys;
 import Map;
 
 export namespace MouseSys {
-    void update(SDL_Event* event, const Map* map);
+    void update(entt::registry& registry, SDL_Event* event, const Map* map);
 }

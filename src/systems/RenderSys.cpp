@@ -86,4 +86,16 @@ void RenderSys::render_world(entt::registry &registry, SDL_Renderer *renderer, c
     };
 
     SDL_RenderTexture(renderer, map->texture, &rect, &render);
+
+    if (map->debugWalkable) {
+        SDL_FRect debug{
+            -map->offsetX,
+            0,
+            scaledWidth,
+            camera.viewport.h,
+        };
+        SDL_SetTextureBlendMode(map->debugWalkable, SDL_BLENDMODE_BLEND);
+        SDL_SetTextureAlphaMod(map->debugWalkable, 128); // 半透明
+        SDL_RenderTexture(renderer, map->debugWalkable, nullptr, &debug);
+    }
 }

@@ -11,6 +11,7 @@ export module Map;
 export struct Map {
     SDL_Texture* texture;
     SDL_Surface* walkableMask;
+    SDL_Texture* debugWalkable;
     float mapWidth;
     float mapHeight;
     float offsetX;

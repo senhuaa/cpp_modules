@@ -15,6 +15,7 @@ export struct World {
     static inline auto registry = new entt::registry{};
     static inline std::unordered_map<unsigned int, Map*> map_list{};
     static inline Map* current_map{};
+    static inline entt::entity camera{};
 
     static void load_world();
     static void load_maps(SDL_Renderer* renderer);

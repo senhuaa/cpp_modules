@@ -32,9 +32,9 @@ void World::update(entt::registry& registry, int w, int h, float delta_time) {
     if (Input::mouseX > w || Input::mouseX < 0 || Input::mouseY > h || Input::mouseY < 0) return;
 
     if (Input::mouseX >= static_cast<float>(w) - edgeThreshold) {
-        current_map->offsetX += 1.0f * delta_time;
+        current_map->offsetX += 50.0f * delta_time;
     } else if (Input::mouseX <= edgeThreshold) {
-        current_map->offsetX -= 1.0f * delta_time;
+        current_map->offsetX -= 50.0f * delta_time;
     }
 
     const float mapOffsetX = current_map->mapWidth - static_cast<float>(w) - 4.5f;

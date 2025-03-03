@@ -16,6 +16,8 @@ import World;
 import Input;
 import Player;
 import AnimationSys;
+import PlayerStateMachine;
+import MouseSys;
 
 void Window::create_window() {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -27,8 +29,8 @@ void Window::create_window() {
 
     SDL_SetRenderVSync(renderer, 1);
 
-    auto camera = registry.create();
-    registry.emplace<Camera>(camera, SDL_FRect{0.0f, 0.0f, WIDTH, HEIGHT}, 1.0f);
+    World::camera = registry.create();
+    registry.emplace<Camera>(World::camera, SDL_FRect{0.0f, 0.0f, WIDTH, HEIGHT}, 1.0f);
 
     World::load_maps(renderer);
     World::load_world();
@@ -39,6 +41,7 @@ void Window::create_window() {
 }
 
 void Window::update() {
+    PlayerStateMachine::run(registry, delta_time);
     World::update(registry, WIDTH, HEIGHT, delta_time);
     SDL_RenderPresent(renderer);
 }
@@ -55,5 +58,5 @@ void Window::clear() {
 void Window::tick_delta_time() {
     dt_last = dt_now;
     dt_now = SDL_GetTicks();
-    delta_time = static_cast<float>(dt_now) - static_cast<float>(dt_last);
+    delta_time = (static_cast<float>(dt_now) - static_cast<float>(dt_last)) / 100.0f;
 }
